@@ -1,0 +1,30 @@
+.custom-scrollbar {
+  --scrollbar-color-thumb: var(--bs-gray-500);
+  --scrollbar-color-track: transparent;
+  --scrollbar-width: thin;
+  --scrollbar-width-legacy: 6px;
+}
+
+@supports selector(::-webkit-scrollbar) {
+  .custom-scrollbar, .custom-scrollbar * {
+    &::-webkit-scrollbar {
+      max-width: var(--scrollbar-width-legacy);
+      max-height: var(--scrollbar-width-legacy);
+      border-radius: calc(var(--scrollbar-width-legacy) * 0.5);
+    }
+    &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-color-thumb);
+      border-radius: calc(var(--scrollbar-width-legacy) * 0.5);
+    }
+    &::-webkit-scrollbar-track {
+      background: var(--scrollbar-color-track);
+    }
+  }
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .custom-scrollbar, .custom-scrollbar * {
+    scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
+    scrollbar-width: var(--scrollbar-width);
+  }
+}

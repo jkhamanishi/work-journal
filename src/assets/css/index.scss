@@ -1,0 +1,154 @@
+@use "./custom-scrollbar.scss";
+
+html, body, #root {
+  height: 100vh;
+  height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  margin: 0;
+}
+
+#root {
+  --text-color: #11c700;
+  --bg-color:   #000000;
+  color: var(--text-color);
+  background: var(--bg-color);
+  overflow: auto;
+  white-space: nowrap;
+}
+
+#container {
+  padding: 1rem;
+}
+
+#container > header {
+  margin-bottom: 1.5rem;
+}
+
+#container > header > button {
+  font-family: inherit;
+  font-size: 0.8rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 0.2rem 0.5rem;
+  border-color: var(--text-color);
+  border-style: solid;
+  border-radius: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  
+  &:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    cursor: pointer;
+  }
+}
+
+#container > header .settings > * {
+  font-size: 0.8rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  
+  & input {
+    font-size: 0.8rem;
+    font-family: inherit;
+    font-size: inherit;
+    background: inherit;
+    color: inherit;
+    border-color: var(--text-color);
+    border-style: solid;
+  }
+}
+
+
+#journal {
+  padding: 0;
+  --line-width: 0.1rem;
+  list-style-type: none;
+  position: relative;
+  margin-bottom: calc(100vh - 16rem);
+}
+
+.year-entry > ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.month-entry, .week-entry {
+  & > div > ul {
+    padding-left: 0;
+    list-style-type: none;
+  }
+}
+
+.month-entry, .week-entry, .day-entry {
+  display: flex;
+  align-items: stretch;
+  & > .v-branch {
+    border-left: var(--line-width) solid var(--text-color);
+    border-bottom: var(--line-width) solid var(--text-color);
+    margin-left: 1rem;
+    flex-grow: 0;
+  }
+  &:last-child > .v-branch {
+    height: 0.5rem;
+  }
+  & > .h-branch {
+    border-left: var(--line-width) solid var(--text-color);
+    border-bottom: var(--line-width) solid var(--text-color);
+    margin: 0 0.25rem 0.25rem calc(-1*var(--line-width));
+    width: 1rem;
+    height: 0.5rem;
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+  & > div {
+    flex-grow: 1;
+  }
+}
+
+.day-entry > div > ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+.project-entry > ul {
+  list-style-type: circle;
+  padding-left: 1.5rem;
+}
+
+.project-entry:last-child {
+  margin-bottom: 1rem;
+}
+
+
+.year-entry > span,
+.month-entry > div > span,
+.month-entry > .h-branch,
+.week-entry > div > span,
+.week-entry > .h-branch,
+.day-entry > div > span,
+.day-entry > .h-branch {
+  position: sticky;
+  display: block;
+  background: var(--bg-color);
+}
+.year-entry > span        { top: 0rem; z-index: 4; padding-top: 1rem;}
+.month-entry > div > span,
+.month-entry > .h-branch  { top: 2rem; z-index: 3; }
+.week-entry > div > span,
+.week-entry > .h-branch   { top: 3rem; z-index: 2; }
+.day-entry > div > span,
+.day-entry > .h-branch    { top: 4rem; z-index: 1; }
+
+
+.project-entry input {
+  border: none;
+  display: inline;
+  font-family: inherit;
+  font-size: inherit;
+  background: inherit;
+  color: inherit;
+  padding: none;
+}
