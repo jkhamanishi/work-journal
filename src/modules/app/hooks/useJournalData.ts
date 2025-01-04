@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getDayOfWeek, monthStringToIndex } from "../utils/dateUtils";
+import { monthStringToIndex } from "../utils/dateUtils";
 import stringToNumber from "../utils/stringToNumber";
 
 type Task = string
@@ -33,16 +33,21 @@ export const getWeekData = (data: JournalData, week: WeekInfo) => data[week.year
 export const getDayData = (data: JournalData, day: DayInfo) => data[day.year][day.month][day.week][day.day];
 export const getProjectData = (data: JournalData, project: ProjectInfo) => data[project.year][project.month][project.week][project.day][project.project];
 
-export const getProjectDate = (project: ProjectInfo) => {
+export const getProjectYear = (project: ProjectInfo) => {
   const monthString = project.day.split(" ")[1];
-  const year = stringToNumber(project.year) - Number(monthString == "December" && monthString != project.month);
-  const month = monthStringToIndex(monthString);
-  const dayOfWeek = project.day.split(", ")[0];
-  const day = stringToNumber(project.day);
-  let date = new Date(year, month, day);
-  if (dayOfWeek != getDayOfWeek(date)) {
-    date = new Date(year+1, month, day);
+  if (project.month == "December" && monthString == "January") {
+    return stringToNumber(project.year) + 1;
+  } else if (project.month == "January" && monthString == "December") {
+    return stringToNumber(project.year) - 1;
+  } else {
+    return stringToNumber(project.year);
   }
+}
+export const getProjectDate = (project: ProjectInfo) => {
+  const year = getProjectYear(project);
+  const month = monthStringToIndex(project.day.split(" ")[1]);
+  const day = stringToNumber(project.day);
+  const date = new Date(year, month, day);
   return date;
 };
 
