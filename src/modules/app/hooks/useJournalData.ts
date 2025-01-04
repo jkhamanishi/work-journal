@@ -34,8 +34,9 @@ export const getDayData = (data: JournalData, day: DayInfo) => data[day.year][da
 export const getProjectData = (data: JournalData, project: ProjectInfo) => data[project.year][project.month][project.week][project.day][project.project];
 
 export const getProjectDate = (project: ProjectInfo) => {
-  const year = stringToNumber(project.year);
-  const month = monthStringToIndex(project.day.split(" ")[1]);
+  const monthString = project.day.split(" ")[1];
+  const year = stringToNumber(project.year) - Number(monthString == "December" && monthString != project.month);
+  const month = monthStringToIndex(monthString);
   const dayOfWeek = project.day.split(", ")[0];
   const day = stringToNumber(project.day);
   let date = new Date(year, month, day);
