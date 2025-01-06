@@ -24,31 +24,46 @@ html, body, #root {
 
 #container > header {
   margin-bottom: 1.5rem;
-}
-
-#container > header > button {
-  font-family: inherit;
-  font-size: 0.8rem;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  padding: 0.2rem 0.5rem;
-  border-color: var(--text-color);
-  border-style: solid;
-  border-radius: 0.5rem;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
   
-  &:hover {
-    background-color: var(--text-color);
-    color: var(--bg-color);
-    cursor: pointer;
+  & button {
+    font-family: inherit;
+    font-size: 0.8rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 0.2rem 0.5rem;
+    border-color: var(--text-color);
+    border-style: solid;
+    border-radius: 0.4rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    
+    &:hover {
+      background-color: var(--text-color);
+      color: var(--bg-color);
+      cursor: pointer;
+    }
   }
 }
 
-#container > header .settings > * {
+
+#settings {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem 1rem;
+  border-color: var(--text-color);
+  border-style: solid;
+  width: min-content;
+}
+#settings > * {
   font-size: 0.8rem;
   display: block;
   margin-bottom: 0.5rem;
+  
+  &.section-title {
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 1rem;
+  }
   
   & input {
     font-size: 0.8rem;
