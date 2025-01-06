@@ -131,7 +131,7 @@ function TaskEntry({task, index}: {task: TaskInfo, index: number}) {
 }
 
 function ProjectEntry({project}: {project: ProjectInfo}) {
-  const {data, setData} = useJournalContext();
+  const {data, setData, defaultProject} = useJournalContext();
   
   const save = (newProjectName: string) => {
     setData((data) => {
@@ -177,7 +177,7 @@ function ProjectEntry({project}: {project: ProjectInfo}) {
         if (dayLabel in getWeekData(data, project)) {
           return {...data};
         } else {
-          data[project.year][project.month][project.week][dayLabel] = {"": []};
+          data[project.year][project.month][project.week][dayLabel] = {[defaultProject]: (defaultProject ? [""] : [])};
           return {...data};
         }
       } else {                                // New week
@@ -190,15 +190,15 @@ function ProjectEntry({project}: {project: ProjectInfo}) {
             if (weekLabel in monthData) {     // Week already exists
               return data;
             } else {                          // New week
-              data[yearLabel][monthLabel][weekLabel] = {[dayLabel]: {"": []}};
+              data[yearLabel][monthLabel][weekLabel] = {[dayLabel]: {[defaultProject]: (defaultProject ? [""] : [])}};
               return {...data};
             }
           } else {                            // New month
-            data[yearLabel][monthLabel] = {[weekLabel]: {[dayLabel]: {"": []}}};
+            data[yearLabel][monthLabel] = {[weekLabel]: {[dayLabel]: {[defaultProject]: (defaultProject ? [""] : [])}}};
             return {...data};
           }
         } else {                              // New year
-          data[yearLabel] = {[monthLabel]: {[weekLabel]: {[dayLabel]: {"": []}}}};
+          data[yearLabel] = {[monthLabel]: {[weekLabel]: {[dayLabel]: {[defaultProject]: (defaultProject ? [""] : [])}}}};
           return {...data};
         }
       }

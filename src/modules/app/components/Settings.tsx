@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
+import { useJournalContext } from "../contexts/useJournalContext";
 
 
 function getFromLocalStorage(key: string, callback: (s: string) => void) {
@@ -49,9 +50,16 @@ function Settings() {
     changeBgColor(themeBgColor);
   }
   
+  const {defaultProject, setDefaultProject} = useJournalContext();
+  const changeDefaultProject = (newDefaultProject: string) => {
+    localStorage.setItem("default-project", newDefaultProject);
+    setDefaultProject(newDefaultProject);
+  }
+  
   useEffect(() => {
     getFromLocalStorage("text-color", changeTextColor);
     getFromLocalStorage("bg-color", changeBgColor);
+    getFromLocalStorage("default-project", changeDefaultProject);
   }, []);
   
   return (
@@ -69,6 +77,8 @@ function Settings() {
           </div>
           <TextSetting label="Text color" defaultValue={textColor} changeFcn={changeTextColor}/>
           <TextSetting label="Background color" defaultValue={bgColor} changeFcn={changeBgColor}/>
+          <hr />
+          <TextSetting label="Default project" defaultValue={defaultProject} changeFcn={changeDefaultProject}/>
         </div>
       )}
     </>

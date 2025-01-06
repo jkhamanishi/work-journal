@@ -3,12 +3,13 @@ import { JournalData } from "../hooks/useJournalData";
 import { JournalFile } from "../utils/getSaveFile";
 
 
-
 export interface JournalContextType {
   file?: JournalFile;
   setFile: (set: JournalFile) => void;
   data: JournalData;
   setData: (set: JournalData | ((old: JournalData) => JournalData)) => void;
+  defaultProject: string
+  setDefaultProject: (set: string | ((old: string) => string)) => void;
 }
 
 export const JournalContext = createContext<JournalContextType | undefined>(undefined);

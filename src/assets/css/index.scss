@@ -16,6 +16,12 @@ html, body, #root {
   background: var(--bg-color);
   overflow: auto;
   white-space: nowrap;
+  
+  & hr {
+    border-color: var(--text-color);
+    border-style: solid;
+    margin: 1rem 0;
+  }
 }
 
 #container {
