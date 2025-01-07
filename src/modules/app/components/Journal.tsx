@@ -45,16 +45,15 @@ function EditableEntry({entry, saveFcn, newEntryFcn, deleteEntry}: EditableEntry
         case "Enter":
           save();
           newEntryFcn(ref.current.value);
-          break;
+          return;
         case "ArrowUp":
-          tabToPrevious(ref.current);
-          break;
+          return tabToPrevious(ref.current);
         case "ArrowDown":
-          tabToNext(ref.current);
-          break;
+          return tabToNext(ref.current);
+        case "Escape":
+          return save();
         default:
-          setSize(ref.current.value.length + 11);
-          break;
+          return setSize(ref.current.value.length + 11);
       }
     }
   };
