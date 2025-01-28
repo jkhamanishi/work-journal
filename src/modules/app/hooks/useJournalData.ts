@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { monthStringToIndex } from "../utils/dateUtils";
+import { monthStringToIndex, getDateLabels } from "../utils/dateUtils";
 import stringToNumber from "../utils/stringToNumber";
 
 type Task = string
@@ -16,8 +16,20 @@ export interface JournalData {
   }
 }
 
+const getExampleData = (): JournalData => {
+  const [yearLabel, monthLabel, weekLabel, dayLabel] = getDateLabels(new Date());
+  return {
+    [yearLabel]: { [monthLabel]: { [weekLabel]: { [dayLabel]: {
+      "Example Project": [
+        "Example task 1",
+        "Example task 2"
+      ]
+    }}}}
+  };
+};
+
 export function useJournalData() {
-  const [data, setData] = useState<JournalData>({});
+  const [data, setData] = useState<JournalData>(getExampleData);
   return [data, setData] as const;
 }
 
