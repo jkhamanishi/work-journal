@@ -1,0 +1,21 @@
+{
+  "lang": "en",
+  "name": "Work Journal",
+  "short_name": "Work Journal",
+  "description": "Work Journal App - Created by Jackson Hamanishi",
+  "scope": "/",
+  "start_url": "/pwa",
+  "id": "/",
+  "background_color": "#000000",
+  "theme_color": "#CCCCCC",
+  "display_override": ["window-controls-overlay"],
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "favicon_mask.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
