@@ -40,6 +40,7 @@ function JournalContainer() {
   
   return (
     <div id="container">
+      <div id="title-bar" />
       <header>
         <button onClick={saveFile}>Save File</button>
         <button onClick={loadFile}>Load File</button>
