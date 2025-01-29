@@ -1,9 +1,12 @@
-import { createContext, useContext } from 'react';
-import { JournalData } from "../hooks/useJournalData";
+import { createContext, useContext, ReactNode, useEffect, useState } from 'react';
+import { useJournalData, JournalData } from "../hooks/useJournalData";
 import { JournalFile } from "../utils/getSaveFile";
+import renderContextProvider from './renderContextProvider';
+
+import * as yaml from "js-yaml";
 
 
-export interface JournalContextType {
+interface JournalContextType {
   file?: JournalFile;
   setFile: (set: JournalFile) => void;
   data: JournalData;
@@ -12,7 +15,32 @@ export interface JournalContextType {
   setDefaultProject: (set: string | ((old: string) => string)) => void;
 }
 
-export const JournalContext = createContext<JournalContextType | undefined>(undefined);
+const JournalContext = createContext<JournalContextType | undefined>(undefined);
+
+export function JournalContextProvider({children}: {children: ReactNode}) {
+  const [file, setFile] = useState<JournalFile>();
+  const [data, setData] = useJournalData();
+  const [defaultProject, setDefaultProject] = useState("");
+  
+  async function updateFile() {
+    if (file) {
+      const content = yaml.dump(data);
+      await file.write(content);
+    }
+  }
+  
+  useEffect(() => {
+    updateFile();
+  }, [data]);
+  
+  const context: JournalContextType = {
+    file, setFile,
+    data, setData,
+    defaultProject, setDefaultProject,
+  };
+  
+  return renderContextProvider(JournalContext.Provider, context, children);
+}
 
 export function useJournalContext() {
   const context = useContext(JournalContext);

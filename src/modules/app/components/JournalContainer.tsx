@@ -41,8 +41,8 @@ function JournalContainer() {
   return (
     <div id="container">
       <header>
-          <button onClick={saveFile}>Save File</button>
-          <button onClick={loadFile}>Load File</button>
+        <button onClick={saveFile}>Save File</button>
+        <button onClick={loadFile}>Load File</button>
         <Settings />
       </header>
       <Journal />
