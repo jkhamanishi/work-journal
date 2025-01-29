@@ -4,7 +4,7 @@
   "short_name": "Work Journal",
   "description": "Work Journal App - Created by Jackson Hamanishi",
   "scope": "/",
-  "start_url": "/pwa",
+  "start_url": "./",
   "id": "/",
   "background_color": "#000000",
   "theme_color": "#CCCCCC",
