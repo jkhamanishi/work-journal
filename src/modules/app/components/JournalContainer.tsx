@@ -14,22 +14,22 @@ function JournalContainer() {
   const {setFile, data, setData} = useJournalContext()
   
   async function saveFile() {
-    const saveFile = await downloadFile();
-    if (!saveFile) {
+    const savedFile = await downloadFile();
+    if (!savedFile) {
       return;
     } else {
-      setFile(saveFile);
+      setFile(savedFile);
       const content = yaml.dump(data);
-      await saveFile.write(content);
+      await savedFile.write(content);
     }
   }
   async function loadFile() {
-    const saveFile = await getSaveFile();
-    if (!saveFile) {
+    const savedFile = await getSaveFile();
+    if (!savedFile) {
       return;
     } else {
-      setFile(saveFile);
-      const data = yaml.load(await saveFile.read()) as JournalData;
+      setFile(savedFile);
+      const data = yaml.load(await savedFile.read()) as JournalData;
       setData(data);
     }
   }
