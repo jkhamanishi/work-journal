@@ -12,7 +12,7 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "favicon_mask.svg",
+      "src": "jkh_logo.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
