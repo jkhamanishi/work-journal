@@ -1,7 +1,7 @@
 import "../../../assets/css/index.scss";
 
 import JournalContainer from "./JournalContainer";
-import { JournalContextProvider } from "../contexts/useJournalContext";
+import { JournalContextProvider } from "../hooks/useJournalContext";
 
 
 function App() {

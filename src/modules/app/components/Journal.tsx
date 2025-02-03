@@ -1,6 +1,6 @@
 import { HTMLAttributes, KeyboardEvent, useEffect, useRef, useState } from "react";
 
-import { useJournalContext } from "../contexts/useJournalContext";
+import { useJournalContext } from "../hooks/useJournalContext";
 import { getYearData, getMonthData, getWeekData, getDayData, getProjectData, getProjectDate } from "../hooks/useJournalData";
 import type { MonthInfo, WeekInfo, DayInfo, ProjectInfo, TaskInfo } from "../hooks/useJournalData";
 

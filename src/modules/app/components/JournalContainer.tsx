@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Journal from "./Journal";
 import Settings from "./Settings";
 
-import { useJournalContext } from "../contexts/useJournalContext";
+import { useJournalContext } from "../hooks/useJournalContext";
 import { JournalData } from "../hooks/useJournalData";
 
 import { downloadFile, getSaveFile } from "../utils/getSaveFile";

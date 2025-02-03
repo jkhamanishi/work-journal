@@ -1,7 +1,7 @@
 import { createContext, useContext, ReactNode, useEffect, useState } from 'react';
-import { useJournalData, JournalData } from "../hooks/useJournalData";
+import { useJournalData, JournalData } from "./useJournalData";
 import { JournalFile } from "../utils/getSaveFile";
-import renderContextProvider from './renderContextProvider';
+import renderContextProvider from '../../core/utils/renderContextProvider';
 
 import * as yaml from "js-yaml";
 

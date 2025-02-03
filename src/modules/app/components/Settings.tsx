@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { useJournalContext } from "../contexts/useJournalContext";
+import { useJournalContext } from "../hooks/useJournalContext";
 
 
 function getFromLocalStorage(key: string, callback: (s: string) => void) {
