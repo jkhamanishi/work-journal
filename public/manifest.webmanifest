@@ -1,7 +1,7 @@
 {
   "lang": "en",
   "name": "Work Journal",
-  "short_name": "Work Journal",
+  "short_name": "Journal",
   "description": "Work Journal App - Created by Jackson Hamanishi",
   "scope": "/",
   "start_url": "./",

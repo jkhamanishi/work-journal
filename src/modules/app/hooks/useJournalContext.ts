@@ -20,7 +20,7 @@ const JournalContext = createContext<JournalContextType | undefined>(undefined);
 export function JournalContextProvider({children}: {children: ReactNode}) {
   const [file, setFile] = useState<JournalFile>();
   const [data, setData] = useJournalData();
-  const [defaultProject, setDefaultProject] = useState("");
+  const [defaultProject, setDefaultProject] = useState("Example Project");
   
   async function updateFile() {
     if (file) {
