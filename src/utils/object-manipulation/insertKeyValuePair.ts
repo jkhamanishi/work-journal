@@ -6,7 +6,7 @@
  * @param insertIndex - The position in the object to insert the new pair into.
  * @returns A new object.
  */
-function insertKeyValuePair(newKey: string, newValue: any, obj: object, insertIndex: number){
+function insertKeyValuePair(newKey: string, newValue: unknown, obj: object, insertIndex: number){
   const keyValues = Object.entries(obj);
   keyValues.splice(insertIndex, 0, [newKey, newValue]);
   return Object.fromEntries(keyValues);

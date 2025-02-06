@@ -1,31 +1,4 @@
-export function getDayOfWeek(date: Date) {
-  return date.toLocaleDateString("en-US", { weekday: "long" });
-}
-
-export function getNextDay(currentDay: Date) {
-  const nextDay = new Date(currentDay);
-  nextDay.setDate(currentDay.getDate() + 1);
-  return nextDay;
-}
-
-export function getThisMonday (currentDay: Date) {
-  const newDay = new Date(currentDay);
-  newDay.setDate(currentDay.getDate() + 1 - currentDay.getDay());
-  return newDay;
-}
-
-export function getNextMonday(currentDay: Date) {
-  const newDay = new Date(currentDay);
-  newDay.setDate(currentDay.getDate() + 7); // Same day next week
-  newDay.setDate(newDay.getDate() + 1 - newDay.getDay()); // Set to Monday of that next week
-  return newDay;
-}
-
-export function getThisFriday (currentDay: Date) {
-  const newDay = new Date(currentDay);
-  newDay.setDate(currentDay.getDate() + 5 - currentDay.getDay());
-  return newDay;
-}
+import { getNextDay, getThisMonday, getThisFriday } from "./getDay";
 
 export function getDayLabel(date: Date) {
   return date.toLocaleDateString("en-US", {
@@ -79,6 +52,4 @@ export function getDateLabels(currentDay: Date) {
   const dayLabel = getDayLabel(currentDay);
   return [yearLabel, monthLabel, weekLabel, dayLabel] as const;
 }
-
-
 

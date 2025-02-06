@@ -48,8 +48,12 @@ export async function getSaveFile(): Promise<JournalFile | undefined> {
       }
     };
     
-  } catch (error: any) {
-    console.error(error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error(error);
+    }
   }
 }
 
@@ -76,8 +80,12 @@ export async function downloadFile() {
       },
     };
     
-  } catch (error: any) {
-    alert(error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      alert(error.message);
+    } else {
+      alert(error);
+    }
   }
 }
 

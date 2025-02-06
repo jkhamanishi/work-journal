@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getDateLabels } from "../utils/dateUtils";
+import { getDateLabels } from "../utils/Date";
 
 type Task = string
 

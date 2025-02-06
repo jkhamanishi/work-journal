@@ -8,7 +8,7 @@ import Settings from "./Settings";
 import { useJournalContext } from "../hooks/useJournalContext";
 import { JournalData } from "../hooks/useJournalData";
 
-import { downloadFile, getSaveFile } from "../utils/getSaveFile";
+import { downloadFile, getSaveFile } from "../utils/IndexedDB";
 
 function JournalContainer() {
   const {setFile, data, setData} = useJournalContext()

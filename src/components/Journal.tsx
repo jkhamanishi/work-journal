@@ -5,9 +5,8 @@ import { getYearData, getMonthData, getWeekData, getDayData, getProjectData, get
 import type { MonthInfo, WeekInfo, DayInfo, ProjectInfo, TaskInfo } from "../hooks/useJournalData";
 
 import { tabToNext, tabToPrevious } from "../utils/tabToNext";
-import insertKeyValuePair from "../utils/insertKeyValuePair";
-import renameObjectKey from "../utils/renameObjectKey";
-import { getDateLabels, getDayLabel, getNextDay, getNextMonday } from "../utils/dateUtils";
+import { insertKeyValuePair, renameObjectKey } from "../utils/object-manipulation";
+import { getDateLabels, getDayLabel, getNextDay, getNextMonday } from "../utils/Date";
 
 
 function TreeBranch() {
@@ -88,7 +87,7 @@ function TaskEntry({task, index}: {task: TaskInfo, index: number}) {
   
   const deleteTask = () => {
     setData((data) => {
-      const project = data[task.year][task.month][task.week][task.day][task.project];
+      const project = getProjectData(data, task);
       if (!project[index]) {
         project.splice(index, 1);
         data[task.year][task.month][task.week][task.day][task.project] = project;
