@@ -1,4 +1,4 @@
-import { HTMLAttributes, KeyboardEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, HTMLAttributes, KeyboardEvent, useEffect, useRef, useState } from "react";
 
 import { useJournalContext } from "../hooks/useJournalContext";
 import { getYearData, getMonthData, getWeekData, getDayData, getProjectData, getProjectDate } from "../hooks/useJournalData";
@@ -39,6 +39,9 @@ function EditableEntry({entry, saveFcn, newEntryFcn, deleteEntry}: EditableEntry
     }
   }
   
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSize(event.currentTarget.value.length + 10)
+  };
   const inputHandler = (event: KeyboardEvent) => {
     if (ref.current) {
       switch (event.key) {
@@ -53,7 +56,7 @@ function EditableEntry({entry, saveFcn, newEntryFcn, deleteEntry}: EditableEntry
         case "Escape":
           return save();
         default:
-          return setSize(ref.current.value.length + 11);
+          return;
       }
     }
   };
@@ -63,6 +66,7 @@ function EditableEntry({entry, saveFcn, newEntryFcn, deleteEntry}: EditableEntry
     onKeyDown: inputHandler,
     onBlur: save,
     autoFocus: (!entry),
+    onChange: onChange,
   };
   return ( <input ref={ref} type="text" spellCheck="true" size={size} {...inputProps} /> );
 }
