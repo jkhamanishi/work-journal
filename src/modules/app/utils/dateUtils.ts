@@ -1,45 +1,3 @@
-export function monthStringToIndex(monthString: string) {
-  switch (monthString.toLowerCase()) {
-    case "jan":
-    case "january":
-      return 0;
-    case "feb":
-    case "february":
-      return 1;
-    case "mar":
-    case "march":
-      return 2;
-    case "apr":
-    case "april":
-      return 3;
-    case "may":
-      return 4;
-    case "jun":
-    case "june":
-      return 5;
-    case "jul":
-    case "july":
-      return 6;
-    case "aug":
-    case "august":
-      return 7;
-    case "sep":
-    case "september":
-      return 8;
-    case "oct":
-    case "october":
-      return 9;
-    case "nov":
-    case "november":
-      return 10;
-    case "dec":
-    case "december":
-      return 11;
-    default:
-      return -1;
-  }
-}
-
 export function getDayOfWeek(date: Date) {
   return date.toLocaleDateString("en-US", { weekday: "long" });
 }
@@ -121,10 +79,6 @@ export function getDateLabels(currentDay: Date) {
   const dayLabel = getDayLabel(currentDay);
   return [yearLabel, monthLabel, weekLabel, dayLabel] as const;
 }
-
-
-
-
 
 
 

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { monthStringToIndex, getDateLabels } from "../utils/dateUtils";
-import stringToNumber from "../utils/stringToNumber";
+import { getDateLabels } from "../utils/dateUtils";
 
 type Task = string
 
@@ -48,18 +47,16 @@ export const getProjectData = (data: JournalData, project: ProjectInfo) => data[
 export const getProjectYear = (project: ProjectInfo) => {
   const monthString = project.day.split(" ")[1];
   if (project.month == "December" && monthString == "January") {
-    return stringToNumber(project.year) + 1;
+    return Number(project.year) + 1;
   } else if (project.month == "January" && monthString == "December") {
-    return stringToNumber(project.year) - 1;
+    return Number(project.year) - 1;
   } else {
-    return stringToNumber(project.year);
+    return Number(project.year);
   }
-}
+};
 export const getProjectDate = (project: ProjectInfo) => {
   const year = getProjectYear(project);
-  const month = monthStringToIndex(project.day.split(" ")[1]);
-  const day = stringToNumber(project.day);
-  const date = new Date(year, month, day);
-  return date;
+  const day = project.day;
+  return new Date(day+", "+year);
 };
 
