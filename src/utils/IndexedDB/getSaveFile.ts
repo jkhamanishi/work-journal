@@ -34,7 +34,7 @@ async function verifyPermission(fileHandle: FileSystemFileHandle) {
   }
 }
 
-export async function uploadFile(): Promise<JournalFile | undefined> {
+export async function uploadFile(userTriggered=false): Promise<JournalFile | undefined> {
   try {
     let retrievedFromIDB = false;
     let fileHandle = await IDB.get<FileSystemFileHandle>('file'); 
@@ -42,7 +42,7 @@ export async function uploadFile(): Promise<JournalFile | undefined> {
       console.log(`Retrieved file handle "${fileHandle.name}" from IndexedDB.`);
       retrievedFromIDB = await verifyPermission(fileHandle);
     }
-    if (!retrievedFromIDB) {
+    if (userTriggered && !retrievedFromIDB) {
       [fileHandle] = await window.showOpenFilePicker({
         types: [{
           description: 'YAML Files',

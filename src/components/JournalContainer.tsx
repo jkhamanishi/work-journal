@@ -1,6 +1,6 @@
 import * as yaml from "js-yaml";
 
-import { useEffect } from "react";
+import { MouseEvent, useEffect } from "react";
 
 import Journal from "./Journal";
 import Settings from "./Settings";
@@ -23,8 +23,8 @@ function JournalContainer() {
       await savedFile.write(content);
     }
   }
-  async function loadFile() {
-    const savedFile = await uploadFile();
+  async function loadFile(event?: MouseEvent) {
+    const savedFile = await uploadFile(event?.isTrusted ?? false);
     if (!savedFile) {
       return;
     } else {
