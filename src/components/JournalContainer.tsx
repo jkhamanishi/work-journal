@@ -6,12 +6,12 @@ import Journal from "./Journal";
 import Settings from "./Settings";
 
 import { useJournalContext } from "../hooks/useJournalContext";
-import { JournalData } from "../hooks/useJournalData";
+import { JournalDict } from "../hooks/useJournalDict";
 
 import { downloadFile, uploadFile } from "../utils/IndexedDB";
 
 function JournalContainer() {
-  const {setFile, data, setData} = useJournalContext()
+  const {setFile, dict, setDict} = useJournalContext()
   
   async function saveFile() {
     const savedFile = await downloadFile();
@@ -19,7 +19,7 @@ function JournalContainer() {
       return;
     } else {
       setFile(savedFile);
-      const content = yaml.dump(data);
+      const content = yaml.dump(dict);
       await savedFile.write(content);
     }
   }
@@ -29,8 +29,8 @@ function JournalContainer() {
       return;
     } else {
       setFile(savedFile);
-      const data = yaml.load(await savedFile.read()) as JournalData;
-      setData(data);
+      const data = yaml.load(await savedFile.read()) as JournalDict;
+      setDict(data);
     }
   }
   

@@ -1,5 +1,5 @@
 import { createContext, useContext, ReactNode, useEffect, useState } from 'react';
-import { useJournalData, JournalData } from "./useJournalData";
+import { useJournalDict, JournalDict } from "./useJournalDict";
 import { type JournalFile } from "../utils/IndexedDB";
 import renderContextProvider from '../lib/react/renderContextProvider';
 
@@ -9,8 +9,8 @@ import * as yaml from "js-yaml";
 interface JournalContextType {
   file?: JournalFile;
   setFile: (set: JournalFile) => void;
-  data: JournalData;
-  setData: (set: JournalData | ((old: JournalData) => JournalData)) => void;
+  dict: JournalDict;
+  setDict: (set: JournalDict | ((old: JournalDict) => JournalDict)) => void;
   defaultProject: string
   setDefaultProject: (set: string | ((old: string) => string)) => void;
 }
@@ -19,23 +19,23 @@ const JournalContext = createContext<JournalContextType | undefined>(undefined);
 
 export function JournalContextProvider({children}: {children: ReactNode}) {
   const [file, setFile] = useState<JournalFile>();
-  const [data, setData] = useJournalData();
+  const [dict, setDict] = useJournalDict();
   const [defaultProject, setDefaultProject] = useState("Example Project");
   
   async function updateFile() {
     if (file) {
-      const content = yaml.dump(data);
+      const content = yaml.dump(dict);
       await file.write(content);
     }
   }
   
   useEffect(() => {
     updateFile();
-  }, [data]);
+  }, [dict]);
   
   const context: JournalContextType = {
     file, setFile,
-    data, setData,
+    dict, setDict,
     defaultProject, setDefaultProject,
   };
   

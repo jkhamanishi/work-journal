@@ -3,7 +3,7 @@ import { getDateLabels } from "../utils/Date";
 
 type Task = string
 
-export interface JournalData {
+export interface JournalDict {
   [year: string]: {
     [month: string]: {
       [week: string]: {
@@ -15,7 +15,7 @@ export interface JournalData {
   }
 }
 
-const getExampleData = (): JournalData => {
+const getExampleDict = (): JournalDict => {
   const [yearLabel, monthLabel, weekLabel, dayLabel] = getDateLabels(new Date());
   return {
     [yearLabel]: { [monthLabel]: { [weekLabel]: { [dayLabel]: {
@@ -27,9 +27,9 @@ const getExampleData = (): JournalData => {
   };
 };
 
-export function useJournalData() {
-  const [data, setData] = useState<JournalData>(getExampleData);
-  return [data, setData] as const;
+export function useJournalDict() {
+  const [dict, setDict] = useState<JournalDict>(getExampleDict);
+  return [dict, setDict] as const;
 }
 
 export interface MonthInfo { year: string; month: string }
@@ -38,11 +38,11 @@ export interface DayInfo extends WeekInfo { day: string }
 export interface ProjectInfo extends DayInfo { project: string }
 export interface TaskInfo extends ProjectInfo { task: string }
 
-export const getYearData = (data: JournalData, year: string) => data[year];
-export const getMonthData = (data: JournalData, month: MonthInfo) => data[month.year][month.month];
-export const getWeekData = (data: JournalData, week: WeekInfo) => data[week.year][week.month][week.week];
-export const getDayData = (data: JournalData, day: DayInfo) => data[day.year][day.month][day.week][day.day];
-export const getProjectData = (data: JournalData, project: ProjectInfo) => data[project.year][project.month][project.week][project.day][project.project];
+export const getYearData = (dict: JournalDict, year: string) => dict[year];
+export const getMonthData = (dict: JournalDict, month: MonthInfo) => dict[month.year][month.month];
+export const getWeekData = (dict: JournalDict, week: WeekInfo) => dict[week.year][week.month][week.week];
+export const getDayData = (dict: JournalDict, day: DayInfo) => dict[day.year][day.month][day.week][day.day];
+export const getProjectData = (dict: JournalDict, project: ProjectInfo) => dict[project.year][project.month][project.week][project.day][project.project];
 
 export const getProjectYear = (project: ProjectInfo) => {
   const monthString = project.day.split(" ")[1];

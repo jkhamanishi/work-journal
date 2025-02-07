@@ -1,8 +1,8 @@
 import { ChangeEvent, HTMLAttributes, KeyboardEvent, useEffect, useRef, useState } from "react";
 
 import { useJournalContext } from "../hooks/useJournalContext";
-import { getYearData, getMonthData, getWeekData, getDayData, getProjectData, getProjectDate } from "../hooks/useJournalData";
-import type { MonthInfo, WeekInfo, DayInfo, ProjectInfo, TaskInfo } from "../hooks/useJournalData";
+import { getYearData, getMonthData, getWeekData, getDayData, getProjectData, getProjectDate } from "../hooks/useJournalDict";
+import type { MonthInfo, WeekInfo, DayInfo, ProjectInfo, TaskInfo } from "../hooks/useJournalDict";
 
 import { tabToNext, tabToPrevious } from "../utils/tabToNext";
 import { insertKeyValuePair, renameObjectKey } from "../utils/object-manipulation";
@@ -71,7 +71,7 @@ function EditableEntry({entry, saveFcn, newEntryFcn, deleteEntry}: EditableEntry
 }
 
 function TaskEntry({task, index}: {task: TaskInfo, index: number}) {
-  const {setData} = useJournalContext();
+  const {setDict: setData} = useJournalContext();
   
   const save = (newTask: string) => {
     setData((data) => {
@@ -133,7 +133,7 @@ function TaskEntry({task, index}: {task: TaskInfo, index: number}) {
 }
 
 function ProjectEntry({project}: {project: ProjectInfo}) {
-  const {data, setData, defaultProject} = useJournalContext();
+  const {dict: data, setDict: setData, defaultProject} = useJournalContext();
   
   const save = (newProjectName: string) => {
     setData((data) => {
@@ -228,7 +228,7 @@ function ProjectEntry({project}: {project: ProjectInfo}) {
 }
 
 function DayEntry({day}: {day: DayInfo}) {
-  const {data} = useJournalContext();
+  const {dict: data} = useJournalContext();
   const projects = Object.keys(getDayData(data, day)).map((project, i) => (
     <ProjectEntry project={{project, ...day}} key={i+"-"+project}/>
   ));
@@ -244,7 +244,7 @@ function DayEntry({day}: {day: DayInfo}) {
 }
 
 function WeekEntry({week}: {week: WeekInfo}) {
-  const {data} = useJournalContext();
+  const {dict: data} = useJournalContext();
   const days = Object.keys(getWeekData(data, week)).map((day, i) => (
     <DayEntry day={{day, ...week}}  key={i+"-"+day}/>
   ));
@@ -260,7 +260,7 @@ function WeekEntry({week}: {week: WeekInfo}) {
 }
 
 function MonthEntry({month}: {month: MonthInfo}) {
-  const {data} = useJournalContext();
+  const {dict: data} = useJournalContext();
   const weeks = Object.keys(getMonthData(data, month)).map((week, i) => (
     <WeekEntry week={{week, ...month}} key={i+"-"+week}/>
   ));
@@ -276,7 +276,7 @@ function MonthEntry({month}: {month: MonthInfo}) {
 }
 
 function YearEntry({year}: {year: string}) {
-  const {data} = useJournalContext();
+  const {dict: data} = useJournalContext();
   const months = Object.keys(getYearData(data, year)).map((month, i) => (
     <MonthEntry month={{year, month}} key={i+"-"+month}/>
   ));
@@ -289,7 +289,7 @@ function YearEntry({year}: {year: string}) {
 }
 
 function Journal() {
-  const {data} = useJournalContext();
+  const {dict: data} = useJournalContext();
   const firstLoad = useRef(0);
   
   useEffect(() => {
