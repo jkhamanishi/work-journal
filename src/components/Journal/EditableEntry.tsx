@@ -7,9 +7,10 @@ interface EditableEntryProps {
   saveFcn: (s: string) => void;
   newEntryFcn: (s: string) => void;
   deleteEntry: () => void;
+  moveEntryFcn: (i: number) => void;
 }
 
-function EditableEntry({entry, saveFcn, newEntryFcn, deleteEntry}: EditableEntryProps) {
+function EditableEntry({entry, saveFcn, newEntryFcn, deleteEntry, moveEntryFcn}: EditableEntryProps) {
   const ref = useRef<HTMLInputElement>(null);
   const [size, setSize] = useState(entry.length + 10);
   const [value, setValue] = useState(entry);
@@ -32,9 +33,9 @@ function EditableEntry({entry, saveFcn, newEntryFcn, deleteEntry}: EditableEntry
           newEntryFcn(value);
           return;
         case "ArrowUp":
-          return tabToPrevious(ref.current);
+          return event.altKey ? moveEntryFcn(+1) : tabToPrevious(ref.current);
         case "ArrowDown":
-          return tabToNext(ref.current);
+          return event.altKey ? moveEntryFcn(-1) : tabToNext(ref.current);
         case "Escape":
           return save();
         default:

@@ -35,10 +35,14 @@ function TaskEntry({task, index}: {task: TaskInfo, index: number}) {
       createNewProjectBelow();
     }
   }
+  const moveEntryFcn = (increment: number) => {
+    data.project = data.project.toSpliced(index, 1).toSpliced(Math.max(0, index-increment), 0, task.task);
+    save();
+  }
   
   return (
     <li>
-      <EditableEntry {...{entry: task.task, saveFcn, newEntryFcn, deleteEntry}} />
+      <EditableEntry {...{entry: task.task, saveFcn, newEntryFcn, deleteEntry, moveEntryFcn}} />
     </li>
   );
 }
