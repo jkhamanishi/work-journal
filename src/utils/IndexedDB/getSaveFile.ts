@@ -1,9 +1,27 @@
 import * as IDB from "idb-keyval";
 
 
-export interface JournalFile {
+export class JournalFile {
   read: () => Promise<string>;
   write: (contents: string) => Promise<void>;
+  
+  constructor(file: File, fileHandle: FileSystemFileHandle) {
+    this.read = async () => await file.text();
+    this.write = async (contents: string) => {
+      const writable = await fileHandle!.createWritable();
+      await writable.write(contents);
+      await writable.close();
+    };
+  }
+  
+  static async create(fileHandle?: FileSystemFileHandle) {
+    if (fileHandle) {
+      const file = await fileHandle.getFile();
+      return new JournalFile(file, fileHandle);
+    } else {
+      return;
+    }
+  }
 }
 
 async function verifyPermission(fileHandle: FileSystemFileHandle) {
@@ -16,7 +34,7 @@ async function verifyPermission(fileHandle: FileSystemFileHandle) {
   }
 }
 
-export async function getSaveFile(): Promise<JournalFile | undefined> {
+export async function uploadFile(): Promise<JournalFile | undefined> {
   try {
     let retrievedFromIDB = false;
     let fileHandle = await IDB.get<FileSystemFileHandle>('file'); 
@@ -37,16 +55,7 @@ export async function getSaveFile(): Promise<JournalFile | undefined> {
         return;
       }
     }
-    
-    const file = await fileHandle!.getFile();
-    return {
-      read: async () => await file.text(),
-      write: async (contents: string) => {
-        const writable = await fileHandle!.createWritable();
-        await writable.write(contents);
-        await writable.close();
-      }
-    };
+    return await JournalFile.create(fileHandle);
     
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -69,16 +78,7 @@ export async function downloadFile() {
     await IDB.set('file', fileHandle); 
     console.log(`Stored file handle for "${fileHandle.name}" in IndexedDB.`);
     
-    const file = await fileHandle.getFile();
-    
-    return {
-      read: async () => await file.text(),
-      write: async (contents: string) => {
-        const writable = await fileHandle.createWritable();
-        await writable.write(contents);
-        await writable.close();
-      },
-    };
+    return await JournalFile.create(fileHandle);
     
   } catch (error: unknown) {
     if (error instanceof Error) {

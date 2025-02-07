@@ -8,7 +8,7 @@ import Settings from "./Settings";
 import { useJournalContext } from "../hooks/useJournalContext";
 import { JournalData } from "../hooks/useJournalData";
 
-import { downloadFile, getSaveFile } from "../utils/IndexedDB";
+import { downloadFile, uploadFile } from "../utils/IndexedDB";
 
 function JournalContainer() {
   const {setFile, data, setData} = useJournalContext()
@@ -24,7 +24,7 @@ function JournalContainer() {
     }
   }
   async function loadFile() {
-    const savedFile = await getSaveFile();
+    const savedFile = await uploadFile();
     if (!savedFile) {
       return;
     } else {
