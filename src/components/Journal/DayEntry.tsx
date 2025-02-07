@@ -11,8 +11,8 @@ function DayEntry({day}: {day: DayInfo}) {
       <div>
         <span>{day.day}</span>
         <ul>
-          {data.listOfProjects.map((project, i) => (
-            <ProjectEntry project={{project, ...day}} key={project || i+1}/>
+          {data.listOfProjects.map(project => (
+            <ProjectEntry project={{project, ...day}} key={project || data.listOfProjects.length}/>
           ))}
         </ul>
       </div>

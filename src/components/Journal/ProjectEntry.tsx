@@ -91,7 +91,7 @@ function ProjectEntry({project}: {project: ProjectInfo}) {
       <EditableEntry {...{entry: project.project, saveFcn, newEntryFcn, deleteEntry, moveEntryFcn}} />
       <ul>
         {data.project.map((task, i) => (
-          <TaskEntry task={{task, ...project}} index={i} key={task || i+1} />
+          <TaskEntry task={{task, ...project}} index={i} key={task || data.project.length} />
         ))}
       </ul>
     </li>
