@@ -37,6 +37,7 @@ function EditableEntry({entry, saveFcn, newEntryFcn, deleteEntry, moveEntryFcn}:
         case "ArrowDown":
           return event.altKey ? moveEntryFcn(-1) : tabToNext(ref.current);
         case "Escape":
+          ref.current.blur();
           return save();
         default:
           return;
