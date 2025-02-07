@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useEffect, useState } from 'react';
+import { createContext, useContext, ReactNode, useState } from 'react';
 import { useJournalDict, JournalDict } from "./useJournalDict";
 import { type JournalFile } from "../utils/IndexedDB";
 import renderContextProvider from '../lib/react/renderContextProvider';
@@ -11,6 +11,7 @@ interface JournalContextType {
   setFile: (set: JournalFile) => void;
   dict: JournalDict;
   setDict: (set: JournalDict | ((old: JournalDict) => JournalDict)) => void;
+  save: () => void;
   defaultProject: string
   setDefaultProject: (set: string | ((old: string) => string)) => void;
 }
@@ -29,13 +30,14 @@ export function JournalContextProvider({children}: {children: ReactNode}) {
     }
   }
   
-  useEffect(() => {
+  function save() {
+    setDict({...dict});
     updateFile();
-  }, [dict]);
+  }
   
   const context: JournalContextType = {
     file, setFile,
-    dict, setDict,
+    dict, setDict, save,
     defaultProject, setDefaultProject,
   };
   

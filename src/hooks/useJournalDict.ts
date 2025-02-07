@@ -32,31 +32,3 @@ export function useJournalDict() {
   return [dict, setDict] as const;
 }
 
-export interface MonthInfo { year: string; month: string }
-export interface WeekInfo extends MonthInfo { week: string }
-export interface DayInfo extends WeekInfo { day: string }
-export interface ProjectInfo extends DayInfo { project: string }
-export interface TaskInfo extends ProjectInfo { task: string }
-
-export const getYearData = (dict: JournalDict, year: string) => dict[year];
-export const getMonthData = (dict: JournalDict, month: MonthInfo) => dict[month.year][month.month];
-export const getWeekData = (dict: JournalDict, week: WeekInfo) => dict[week.year][week.month][week.week];
-export const getDayData = (dict: JournalDict, day: DayInfo) => dict[day.year][day.month][day.week][day.day];
-export const getProjectData = (dict: JournalDict, project: ProjectInfo) => dict[project.year][project.month][project.week][project.day][project.project];
-
-export const getProjectYear = (project: ProjectInfo) => {
-  const monthString = project.day.split(" ")[1];
-  if (project.month == "December" && monthString == "January") {
-    return Number(project.year) + 1;
-  } else if (project.month == "January" && monthString == "December") {
-    return Number(project.year) - 1;
-  } else {
-    return Number(project.year);
-  }
-};
-export const getProjectDate = (project: ProjectInfo) => {
-  const year = getProjectYear(project);
-  const day = project.day;
-  return new Date(day+", "+year);
-};
-
