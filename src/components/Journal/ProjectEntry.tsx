@@ -57,7 +57,7 @@ function ProjectEntry({project}: {project: ProjectInfo}) {
     } else {                                // Next week
       const nextMonday = getNextMonday(nextDay);
       const [yearLabel, monthLabel, weekLabel, dayLabel] = getDateLabels(nextMonday);
-      if (yearLabel in data.listOfYears) {  // Year already recorded
+      if (yearLabel in dict) {              // Year already recorded
         const yearData = dict[yearLabel];
         if (monthLabel in yearData) {       // Month already recorded
           const monthData = yearData[monthLabel];
