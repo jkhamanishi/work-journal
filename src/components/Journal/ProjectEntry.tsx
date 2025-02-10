@@ -1,8 +1,7 @@
 import { useJournalContext } from "../../hooks/useJournalContext";
 import { ProjectInfo, useProjectContext } from "../../hooks/useJournalDataContext";
 import { getDateLabels, getDayLabel, getNextDay, getNextMonday } from "../../utils/Date";
-import { renameObjectKey } from "../../utils/object-manipulation";
-import { moveUpKeyValuePair } from "../../utils/object-manipulation/moveKeyValuePair";
+import { renameObjectKey, moveUpKeyValuePair } from "../../utils/object-manipulation";
 import EditableEntry from "./EditableEntry";
 import TaskEntry from "./TaskEntry";
 
