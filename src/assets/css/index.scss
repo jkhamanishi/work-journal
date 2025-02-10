@@ -14,8 +14,8 @@ html, body, #root {
   --bg-color:   #000000;
   color: var(--text-color);
   background: var(--bg-color);
-  overflow: auto;
-  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
   
   & hr {
     border-color: var(--text-color);
@@ -25,7 +25,9 @@ html, body, #root {
 }
 
 #container {
-  padding: 1rem;
+  padding: 0 1rem;
+  overflow: auto;
+  white-space: nowrap;
 }
 
 #container > header {
