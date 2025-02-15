@@ -1,8 +1,10 @@
-import React, {ReactNode, useEffect, useMemo, useState} from 'react';
-import {firstChildMenu, isRootMenu, lastChildMenu, nextMenu, nextRootMenu, parentMenu} from "../utils/menuTraversal";
-import {Key, keyWithModifiers, normalizeKey} from "../utils/hotKeys";
-import {classNames, MENUBAR_HOVERABLE} from "../utils/classNames";
-import {Callback, IMenubarContext, MenuBarContext} from "./MenubarContext";
+import { ReactNode, RefObject, useCallback, useMemo, useRef, useState } from 'react';
+import { useBoolean, useEventListener, useOnClickOutside } from "usehooks-ts";
+
+import { firstChildMenu, isRootMenu, lastChildMenu, nextMenu, nextRootMenu, parentMenu } from "../utils/menuTraversal";
+import { Key, keyWithModifiers, normalizeKey } from "../utils/hotKeys";
+import { classNames, MENUBAR, MENUBAR_HOVERABLE } from "../utils/classNames";
+import { Callback, IMenubarContext, MenuBarContext } from "./MenubarContext";
 
 
 type DisableCallback = () => boolean;
@@ -18,42 +20,39 @@ type MenuBarProps = {
   children: ReactNode;
 }
 
-// export const MenuBar: React.FC<MenuBarProps> = ({onSelect, expandIcon = "⮞", checkedIcon = "✔", enableHotKeys = false, disableMenubar = false, openMenusOnHover = false, className, children}) => {
-export const MenuBar: React.FC<MenuBarProps> = ({
+export function MenuBar({
   onSelect, 
   expandIcon = "⮞", 
   checkedIcon = "✔", 
-  enableHotKeys = false, 
+  enableHotKeys = true, 
   disableMenubar = false, 
   openMenusOnHover = false, 
   className, 
   children,
-}) => {
-  const [callbacks] = useState<Record<string, Callback>>({});
+}: MenuBarProps) {
+  const ref = useRef<HTMLUListElement>(null) as RefObject<HTMLUListElement>;
   
-  useEffect(() => {
-    const hotKeyHandler = (keyboardEvent: KeyboardEvent): void => {
-      if ((typeof disableMenubar === "boolean" && disableMenubar) || (typeof disableMenubar === "function" && disableMenubar() === true)) {
-        return;
+  const [callbacks] = useState<Record<string, Callback>>({});
+  const { value: active, setTrue: setActive, setFalse: unsetActive } = useBoolean(false);
+  
+  const hotKeyHandler = useCallback((keyboardEvent: KeyboardEvent): void => {
+    if (!enableHotKeys || (typeof disableMenubar === "boolean" && disableMenubar) || (typeof disableMenubar === "function" && disableMenubar() === true)) {
+      return;
+    }
+    const hotKeyPressed = keyWithModifiers(keyboardEvent);
+    if (hotKeyPressed) {
+      const key = normalizeKey(hotKeyPressed);
+      if (key && callbacks[key]) {
+        keyboardEvent.stopPropagation();
+        keyboardEvent.preventDefault();
+        const callback = callbacks[key];
+        callback();
       }
-      const hotKeyPressed = keyWithModifiers(keyboardEvent);
-      if (hotKeyPressed) {
-        const key = normalizeKey(hotKeyPressed);
-        if (key && callbacks[key]) {
-          keyboardEvent.stopPropagation();
-          keyboardEvent.preventDefault();
-          const callback = callbacks[key];
-          callback();
-        }
-      }
-    };
-    
-    if (enableHotKeys) { document.addEventListener('keydown', hotKeyHandler) }
-    return () => { document.removeEventListener('keydown', hotKeyHandler) }
+    }
   }, [enableHotKeys, disableMenubar, callbacks]);
   
   
-  const handleKeyNavigation = React.useMemo(() => (event: React.KeyboardEvent) => {
+  const handleKeyNavigation = useCallback((event: KeyboardEvent) => {
     if ((typeof disableMenubar === "boolean" && disableMenubar) || (typeof disableMenubar === "function" && disableMenubar() === true)) {
       return;
     }
@@ -85,7 +84,14 @@ export const MenuBar: React.FC<MenuBarProps> = ({
     (nextFocusElement as HTMLLIElement)?.focus();
   }, [disableMenubar]);
   
+  useEventListener('keydown', hotKeyHandler);
+  useEventListener('keydown', handleKeyNavigation, ref);
+  useEventListener('click', setActive, ref);
+  useEventListener('blur', unsetActive);
+  useOnClickOutside(ref, unsetActive);
+  
   const context: IMenubarContext = useMemo(() => ({
+    active,
     onSelect,
     expandIcon,
     checkedIcon,
@@ -106,11 +112,13 @@ export const MenuBar: React.FC<MenuBarProps> = ({
         delete callbacks[key];
       }
     }
-  }), [disableMenubar, checkedIcon, expandIcon, enableHotKeys, onSelect, callbacks]);
+  }), [disableMenubar, checkedIcon, expandIcon, enableHotKeys, onSelect, callbacks, active]);
+  
   return (
     <ul {...{
-      className: classNames('reactAppMenubar', className, {[MENUBAR_HOVERABLE]: openMenusOnHover}),
-      onKeyDown: handleKeyNavigation,
+      ref,
+      tabIndex: 0,
+      className: classNames(className, MENUBAR, {[MENUBAR_HOVERABLE]: openMenusOnHover}),
       children: (
         <MenuBarContext.Provider {...{value: context, children}} />
       ),

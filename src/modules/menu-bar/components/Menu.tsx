@@ -1,48 +1,77 @@
 import "./Menu.scss";
 
-import React, {ReactNode, useContext, useEffect, useRef} from 'react';
+import React, { ReactNode, RefObject, useContext, useEffect, useRef } from 'react';
+import { useEventListener } from "usehooks-ts";
+
 import {
-    classNames,
-    HOTKEY,
-    HOTKEY_INVISIBLE,
-    ICON,
-    ICON_LEFT,
-    ICON_RIGHT,
-    ICON_ROOT,
-    LABEL,
-    LABEL_CONTAINER,
-    LABEL_EM,
-    MENU,
-    MENU_DISABLED,
-    MENU_ROOT,
-    SUBMENUS,
+  classNames,
+  HOTKEY,
+  HOTKEY_INVISIBLE,
+  ICON,
+  ICON_LEFT,
+  ICON_RIGHT,
+  ICON_ROOT,
+  LABEL,
+  LABEL_CONTAINER,
+  LABEL_EM,
+  MENU,
+  MENU_DISABLED,
+  MENU_ROOT,
+  SUBMENUS,
 } from '../utils/classNames';
-import {Keys} from '../utils/Keys';
-import {MenuBarContext} from "./MenubarContext";
+import { Keys } from '../utils/Keys';
+import { MenuBarContext } from "./MenubarContext";
+import toTitleCase from "../utils/toTitleCase";
+import { parentMenu } from "../utils/menuTraversal";
 
 const alt = Keys.alt;
 const MenuContext = React.createContext<string | null>(null);
 
 type MenuProps = {
-    menuId?: string;
-    label: string;
-    icon?: string | React.ReactNode;
-    hotKeys?: string[];
-    focusKey?: string;
-    show?: boolean;
-    disabled?: boolean;
-    checked?: boolean;
-    onSelect?: () => void,
-    closeOnSelect?: boolean,
-    children?: ReactNode
+  menuId?: string;
+  label: string;
+  icon?: string | React.ReactNode;
+  hotKeys?: string[];
+  focusKey?: string;
+  show?: boolean;
+  disabled?: boolean;
+  checked?: boolean;
+  onSelect?: () => void,
+  closeOnSelect?: boolean,
+  children?: ReactNode
 }
 
-export const Menu: React.FC<MenuProps> = ({onSelect, menuId, label, icon, hotKeys, focusKey, show = true, disabled = false, checked, children, closeOnSelect}) => {
-  const menuBar = useContext(MenuBarContext);
+export function Menu({
+  onSelect,
+  menuId,
+  label,
+  icon,
+  hotKeys,
+  focusKey,
+  show = true,
+  disabled = false,
+  checked,
+  closeOnSelect,
+  children,
+}: MenuProps) {
+  const {active, ...menuBar} = useContext(MenuBarContext)!;
   const longestSiblingHotkey = useContext(MenuContext);
-  const ref = useRef<HTMLLIElement>(null);
-  
+  const ref = useRef<HTMLLIElement>(null) as RefObject<HTMLLIElement>;
   const isRootMenu = longestSiblingHotkey === null;
+  
+  useEventListener('mouseover', (event: MouseEvent) => {
+    if (!active) return;
+    ref.current?.focus();
+    event.stopPropagation();
+  }, ref);
+  
+  useEventListener('mouseleave', (event: MouseEvent) => {
+    if (!active || children) return;
+    const parent = parentMenu(ref.current) as HTMLLIElement;
+    parent?.focus();
+    event.stopPropagation();
+  }, ref);
+  
   if (children || isRootMenu) {
     hotKeys = undefined;
   }
@@ -75,12 +104,12 @@ export const Menu: React.FC<MenuProps> = ({onSelect, menuId, label, icon, hotKey
     return null;
   } else if (isRootMenu) {
     return (
-      <li ref={ref} tabIndex={0} className={classNames(`reactAppMenubar--menu`, MENU_ROOT, {[`reactAppMenubar--menu-isDisabled`]: disabled})}>
-        <div className={`reactAppMenubar--menu--labelContainer`}>
+      <li ref={ref} tabIndex={0} className={classNames(MENU, MENU_ROOT, {[MENU_DISABLED]: disabled})}>
+        <div className={LABEL_CONTAINER}>
           {icon && (
-            <span className={classNames(`reactAppMenubar--menu--icon`, ICON_ROOT)}>{icon}</span>
+            <span className={classNames(ICON, ICON_ROOT)}>{icon}</span>
           )}
-          <span className={`reactAppMenubar--menu--label`}>
+          <span className={LABEL}>
             {!focusKey || !label.includes(focusKey) ? label :(
               <>
                 <span>{label.substring(0, label.indexOf(focusKey))}</span>
@@ -91,7 +120,7 @@ export const Menu: React.FC<MenuProps> = ({onSelect, menuId, label, icon, hotKey
           </span>
         </div>
         {children && !disabled && (
-          <ul className={`reactAppMenubar--menu--submenus`}>
+          <ul tabIndex={-1} className={SUBMENUS}>
             <MenuContext.Provider value={getLongestHotkeyInChildren(children)}>
               {children}
             </MenuContext.Provider>
@@ -127,13 +156,13 @@ export const Menu: React.FC<MenuProps> = ({onSelect, menuId, label, icon, hotKey
         <div className={LABEL_CONTAINER} onClick={clickHandler}>
           <span className={classNames(ICON, ICON_LEFT)}>{checked ? menuBar.checkedIcon : icon}</span>
           <span className={LABEL}>{label}</span>
-          {hotKeysEnabled && hotKeys && <span className={HOTKEY}>{hotKeys.join('+')}</span>}
+          {hotKeysEnabled && hotKeys && <span className={HOTKEY}>{hotKeys.map(toTitleCase).join('+')}</span>}
           {hotKeysEnabled && !hotKeys && longestSiblingHotkey &&
           <span className={classNames(HOTKEY, HOTKEY_INVISIBLE)}>{longestSiblingHotkey}</span>}
           {children && <span className={classNames(ICON, ICON_RIGHT)}>{menuBar.expandIcon}</span>}
         </div>
         {children && !disabled && (
-          <ul className={SUBMENUS}>
+          <ul tabIndex={-1} className={SUBMENUS}>
             <MenuContext.Provider value={hotKeysEnabled ? getLongestHotkeyInChildren(children) : ''}>
               {children}
             </MenuContext.Provider>

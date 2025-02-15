@@ -1,34 +1,34 @@
-import { MenuBar as _MenuBar, Menu as _Menu, Keys } from "../../../menu-bar";
+import { MenuBar as _MenuBar, Menu, Keys } from "../../../menu-bar";
 import "./MenuBar.scss";
 
 
-
-
-
 function MenuBar() {
-  
-  
-  return (
+  return (  
     <nav id="menubar">
       <_MenuBar>
-        <_Menu label="File">
-          <_Menu label="Open..." hotKeys={Keys.ctrl("O")} />
-          <_Menu label="Save" hotKeys={Keys.ctrl("S")} />
-          <_Menu label="Save As..." hotKeys={Keys.ctrlShift("S")} />
-        </_Menu>
-        <_Menu label="Edit">
-          <_Menu label="Settings..." />
-        </_Menu>
-        <_Menu label="View">
-          <_Menu label="Font Size">
-            <_Menu label="Increase Font Size" />
-            <_Menu label="Decrease Font Size" />
-            <_Menu label="Restore Default Font Size" />
-          </_Menu>
-        </_Menu>
-        <_Menu label="Help">
-          <_Menu label="Version..." />
-        </_Menu>
+        <Menu label="File">
+          <Menu label="Open..." hotKeys={Keys.ctrl("O")} />
+          <Menu label="Save" hotKeys={Keys.ctrl("S")} />
+          <Menu label="Save As..." hotKeys={Keys.ctrlShift("S")} />
+        </Menu>
+        <Menu label="Edit">
+          <Menu label="Settings..." />
+        </Menu>
+        <Menu label="View">
+          <Menu label="Font Size">
+            <Menu label="Increase Font Size" />
+            <Menu label="Decrease Font Size" />
+            <Menu label="Restore Default Font Size" />
+          </Menu>
+          <Menu label="Branch Width">
+            <Menu label="Increase Branch Width" />
+            <Menu label="Decrease Branch Width" />
+            <Menu label="Restore Default Branch Width" />
+          </Menu>
+        </Menu>
+        <Menu label="Help">
+          <Menu label="Version..." />
+        </Menu>
       </_MenuBar>
     </nav>
   );
