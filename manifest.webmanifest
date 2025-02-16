@@ -8,7 +8,6 @@
   "id": "/",
   "background_color": "#000000",
   "theme_color": "#CCCCCC",
-  "display_override": ["window-controls-overlay"],
   "display": "standalone",
   "icons": [
     {
