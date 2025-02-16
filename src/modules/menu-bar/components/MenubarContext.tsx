@@ -1,6 +1,6 @@
-import React, {ReactNode} from "react";
+import React, { ReactNode } from "react";
 
-export type Callback = () => void
+export type Callback = (e?: Event) => void
 type DisableMenuBarCallback= () => boolean
 
 export interface IMenubarContext {

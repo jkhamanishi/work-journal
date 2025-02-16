@@ -1,16 +1,16 @@
-import { MouseEvent } from "react";
-import Settings from "./Settings";
+import { useEffect } from "react";
 
 import { useJournalContext } from "../hooks/useJournalContext";
 import { JournalDict } from "../hooks/useJournalDict";
 
 import * as yaml from "js-yaml";
+import * as IDB from "idb-keyval";
 import { downloadFile, uploadFile } from "../utils/IndexedDB";
 
 
 
-function Header() {
-  const {setFile, dict, setDict} = useJournalContext()
+function useJournalFile() {
+  const {file, setFile, dict, setDict} = useJournalContext()
   
   async function saveFile() {
     const savedFile = await downloadFile();
@@ -22,9 +22,14 @@ function Header() {
       await savedFile.write(content);
     }
   }
-  async function loadFile(event?: MouseEvent) {
+  async function loadFile(event?: Event) {
+    const oldFileHandle = await IDB.get<FileSystemFileHandle>('file'); 
+    if (file) {
+      await IDB.del('file');
+    }
     const savedFile = await uploadFile(event?.isTrusted ?? false);
     if (!savedFile) {
+      IDB.set('file', oldFileHandle);
       return;
     } else {
       setFile(savedFile);
@@ -33,18 +38,12 @@ function Header() {
     }
   }
   
-  // useEffect(() => {
-  //   loadFile();
-  // }, []);
+  useEffect(() => {
+    loadFile();
+  }, []);
   
-  return (
-    <header>
-      <button onClick={saveFile}>Save File</button>
-      <button onClick={loadFile}>Load File</button>
-      <Settings />
-    </header>
-  );
+  return { saveFile, loadFile }
 }
 
 
-export default Header;
+export default useJournalFile;

@@ -1,15 +1,20 @@
-import { MenuBar as _MenuBar, Menu, Keys } from "../../../menu-bar";
 import "./MenuBar.scss";
+
+import { MenuBar as _MenuBar, Menu, Keys } from "../../../menu-bar";
+import useAppMenu from "../../hooks/useAppMenu";
 
 
 function MenuBar() {
+  const menu = useAppMenu();
+  
   return (  
     <nav id="menubar">
       <_MenuBar>
         <Menu label="File">
-          <Menu label="Open..." hotKeys={Keys.ctrl("O")} />
-          <Menu label="Save" hotKeys={Keys.ctrl("S")} />
-          <Menu label="Save As..." hotKeys={Keys.ctrlShift("S")} />
+          <Menu label="Open..." hotKeys={Keys.ctrl("O")} onSelect={menu.open} />
+          <Menu label="Save" hotKeys={Keys.ctrl("S")} onSelect={menu.save} />
+          <Menu label="Save As..." hotKeys={Keys.ctrlShift("S")} onSelect={menu.saveAs} />
+          <Menu label="AutoSave" checked={menu.autoSave} onSelect={menu.toggleAutoSave} closeOnSelect={false} />
         </Menu>
         <Menu label="Edit">
           <Menu label="Settings..." />

@@ -1,6 +1,6 @@
 import "./Menu.scss";
 
-import React, { ReactNode, RefObject, useContext, useEffect, useRef } from 'react';
+import React, { MouseEventHandler, ReactNode, RefObject, useContext, useEffect, useRef } from 'react';
 import { useEventListener } from "usehooks-ts";
 
 import {
@@ -20,7 +20,7 @@ import {
   SUBMENUS,
 } from '../utils/classNames';
 import { Keys } from '../utils/Keys';
-import { MenuBarContext } from "./MenubarContext";
+import { Callback, MenuBarContext } from "./MenubarContext";
 import toTitleCase from "../utils/toTitleCase";
 import { parentMenu } from "../utils/menuTraversal";
 
@@ -36,7 +36,7 @@ type MenuProps = {
   show?: boolean;
   disabled?: boolean;
   checked?: boolean;
-  onSelect?: () => void,
+  onSelect?: Callback,
   closeOnSelect?: boolean,
   children?: ReactNode
 }
@@ -51,7 +51,7 @@ export function Menu({
   show = true,
   disabled = false,
   checked,
-  closeOnSelect,
+  closeOnSelect = true,
   children,
 }: MenuProps) {
   const {active, ...menuBar} = useContext(MenuBarContext)!;
@@ -129,12 +129,12 @@ export function Menu({
       </li>
     );
   } else {
-    const clickHandler = children || disabled ? undefined : () => selectMenu();
+    const clickHandler: unknown = children || disabled ? undefined : (e?: Event) => selectMenu(e);
     const keyDownHandler: React.KeyboardEventHandler | undefined = children || disabled ? undefined : (e) => {
       if (e.key === "Enter") selectMenu();
     }
     
-    const selectMenu = () => {
+    const selectMenu = (e?: Event) => {
       if ((typeof menuBar.disableMenubar === "boolean" && menuBar.disableMenubar) || (typeof menuBar.disableMenubar === "function" && menuBar.disableMenubar() === true)) {
         return;
       }
@@ -143,7 +143,7 @@ export function Menu({
         (document.activeElement as HTMLElement).blur();
       }
       if (onSelect) {
-        onSelect();
+        onSelect(e);
       } else if (menuId && menuBar.onSelect) {
         menuBar.onSelect(menuId);
       } else {
@@ -153,7 +153,7 @@ export function Menu({
     
     return (
       <li ref={ref} tabIndex={-1} className={classNames(MENU, {[MENU_DISABLED]: disabled})} onKeyDown={keyDownHandler}>
-        <div className={LABEL_CONTAINER} onClick={clickHandler}>
+        <div className={LABEL_CONTAINER} onClick={clickHandler as MouseEventHandler}>
           <span className={classNames(ICON, ICON_LEFT)}>{checked ? menuBar.checkedIcon : icon}</span>
           <span className={LABEL}>{label}</span>
           {hotKeysEnabled && hotKeys && <span className={HOTKEY}>{hotKeys.map(toTitleCase).join('+')}</span>}

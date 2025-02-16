@@ -24,10 +24,10 @@ export class JournalFile {
   }
 }
 
-async function verifyPermission(fileHandle: FileSystemFileHandle) {
+async function verifyPermission(fileHandle: FileSystemFileHandle, userTriggered=false) {
   if ((await fileHandle.queryPermission({mode: "readwrite"})) === "granted") {
     return true;
-  } else if ((await fileHandle.requestPermission({mode: "readwrite"})) === "granted") {
+  } else if (userTriggered && (await fileHandle.requestPermission({mode: "readwrite"})) === "granted") {
     return true;
   } else {
     return false;
@@ -40,7 +40,7 @@ export async function uploadFile(userTriggered=false): Promise<JournalFile | und
     let fileHandle = await IDB.get<FileSystemFileHandle>('file'); 
     if (fileHandle) {
       console.log(`Retrieved file handle "${fileHandle.name}" from IndexedDB.`);
-      retrievedFromIDB = await verifyPermission(fileHandle);
+      retrievedFromIDB = await verifyPermission(fileHandle, userTriggered);
     }
     if (userTriggered && !retrievedFromIDB) {
       [fileHandle] = await window.showOpenFilePicker({
@@ -51,15 +51,18 @@ export async function uploadFile(userTriggered=false): Promise<JournalFile | und
       });
       await IDB.set('file', fileHandle); 
       console.log(`Stored file handle for "${fileHandle.name}" in IndexedDB.`);
-      if (!(await verifyPermission(fileHandle))) {
+      if (!(await verifyPermission(fileHandle, userTriggered))) {
         return;
       }
+    } else if (!userTriggered && !retrievedFromIDB) {
+      return;
     }
+    
     return await JournalFile.create(fileHandle);
     
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.error(error.message);
+      console.warn(error.message);
     } else {
       console.error(error);
     }
@@ -82,9 +85,9 @@ export async function downloadFile() {
     
   } catch (error: unknown) {
     if (error instanceof Error) {
-      alert(error.message);
+      console.warn(error.message);
     } else {
-      alert(error);
+      console.error(error);
     }
   }
 }
