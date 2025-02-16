@@ -3,6 +3,7 @@ import renderContextProvider from "../../../lib/react/renderContextProvider";
 import { useBoolean } from "usehooks-ts";
 
 interface AppContextType {
+  showAppVersion: () => void;
   showSettings: boolean;
   toggleShowSettings: () => void;
   hideSettings: () => void;
@@ -11,9 +12,11 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppContextProvider({children}: {children: ReactNode}) {
+  const showAppVersion = () => alert('App Version: v'+APP_VERSION);
   const {value: showSettings, toggle: toggleShowSettings, setFalse: hideSettings} = useBoolean(false);
   
   const context: AppContextType = {
+    showAppVersion,
     showSettings, toggleShowSettings, hideSettings,
   };
   

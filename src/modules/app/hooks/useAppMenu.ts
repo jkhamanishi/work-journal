@@ -8,11 +8,12 @@ function useAppMenu() {
   const { loadFile: open, saveFile: saveAs } = useJournalFile();
   const { save: _save, file, autoSave, toggleAutoSave } = useJournalContext();
   const save = () => file ? _save(true) : saveAs();
-  const { toggleShowSettings } = useAppContext();
+  const { toggleShowSettings, showAppVersion } = useAppContext();
   
   return {
     open, save, saveAs, autoSave, toggleAutoSave,
     toggleShowSettings,
+    showAppVersion,
   }
 }
 

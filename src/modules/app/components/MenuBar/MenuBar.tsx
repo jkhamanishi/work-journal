@@ -32,7 +32,7 @@ function MenuBar() {
           </Menu>
         </Menu>
         <Menu label="Help">
-          <Menu label="Version..." />
+          <Menu label="Version..." onSelect={menu.showAppVersion} />
         </Menu>
       </_MenuBar>
     </nav>
