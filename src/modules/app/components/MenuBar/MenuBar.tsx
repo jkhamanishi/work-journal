@@ -26,9 +26,9 @@ function MenuBar() {
             <Menu label="Restore Default Font Size" onSelect={menu.font.reset} keepOpenOnSelect />
           </Menu>
           <Menu label="Branch Width">
-            <Menu label="Increase Branch Width" />
-            <Menu label="Decrease Branch Width" />
-            <Menu label="Restore Default Branch Width" />
+            <Menu label="Increase Branch Width" onSelect={menu.branchWidth.increase} keepOpenOnSelect />
+            <Menu label="Decrease Branch Width" onSelect={menu.branchWidth.decrease} keepOpenOnSelect />
+            <Menu label="Restore Default Branch Width" onSelect={menu.branchWidth.reset} keepOpenOnSelect />
           </Menu>
         </Menu>
         <Menu label="Help">

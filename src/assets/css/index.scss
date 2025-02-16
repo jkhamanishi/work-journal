@@ -35,7 +35,7 @@ html, body, #root {
 
 #journal {
   padding: 0;
-  --line-width: 0.1rem;
+  --branch-width: 0.1rem;
   list-style-type: none;
   position: relative;
   margin-bottom: calc(100vh - 32rem);
@@ -57,8 +57,8 @@ html, body, #root {
   display: flex;
   align-items: stretch;
   & > .v-branch {
-    border-left: var(--line-width) solid var(--text-color);
-    border-bottom: var(--line-width) solid var(--text-color);
+    border-left: var(--branch-width) solid var(--text-color);
+    border-bottom: var(--branch-width) solid var(--text-color);
     margin-left: 1rem;
     flex-grow: 0;
   }
@@ -66,9 +66,9 @@ html, body, #root {
     height: 0.5rem;
   }
   & > .h-branch {
-    border-left: var(--line-width) solid var(--text-color);
-    border-bottom: var(--line-width) solid var(--text-color);
-    margin: 0 0.25rem 0.25rem calc(-1*var(--line-width));
+    border-left: var(--branch-width) solid var(--text-color);
+    border-bottom: var(--branch-width) solid var(--text-color);
+    margin: 0 0.25rem 0.25rem calc(-1*var(--branch-width));
     width: 1rem;
     height: 0.5rem;
     flex-shrink: 0;
