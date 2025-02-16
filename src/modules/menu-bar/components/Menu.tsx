@@ -37,7 +37,7 @@ type MenuProps = {
   disabled?: boolean;
   checked?: boolean;
   onSelect?: Callback,
-  closeOnSelect?: boolean,
+  keepOpenOnSelect?: boolean,
   children?: ReactNode
 }
 
@@ -51,10 +51,10 @@ export function Menu({
   show = true,
   disabled = false,
   checked,
-  closeOnSelect = true,
+  keepOpenOnSelect = false,
   children,
 }: MenuProps) {
-  const {active, ...menuBar} = useContext(MenuBarContext)!;
+  const {active, toggleActive, ...menuBar} = useContext(MenuBarContext)!;
   const longestSiblingHotkey = useContext(MenuContext);
   const ref = useRef<HTMLLIElement>(null) as RefObject<HTMLLIElement>;
   const isRootMenu = longestSiblingHotkey === null;
@@ -103,9 +103,13 @@ export function Menu({
   if (!show || !menuBar) {
     return null;
   } else if (isRootMenu) {
+    const onClick = () => {
+      toggleActive();
+      if (active) (document.activeElement as HTMLElement)?.blur();
+    };
     return (
       <li ref={ref} tabIndex={0} className={classNames(MENU, MENU_ROOT, {[MENU_DISABLED]: disabled})}>
-        <div className={LABEL_CONTAINER}>
+        <div onClick={onClick} className={LABEL_CONTAINER}>
           {icon && (
             <span className={classNames(ICON, ICON_ROOT)}>{icon}</span>
           )}
@@ -139,7 +143,7 @@ export function Menu({
         return;
       }
       
-      if (closeOnSelect !== false && document.activeElement) {
+      if (keepOpenOnSelect === false && document.activeElement) {
         (document.activeElement as HTMLElement).blur();
       }
       if (onSelect) {

@@ -25,6 +25,8 @@ html, body, #root {
 }
 
 #container {
+  --font-size: 1rem;
+  font-size: var(--font-size);
   padding: 0 1rem;
   overflow: auto;
   white-space: nowrap;

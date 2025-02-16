@@ -5,6 +5,7 @@ type DisableMenuBarCallback= () => boolean
 
 export interface IMenubarContext {
     active: boolean;
+    toggleActive: () => void;
     onSelect?: (menuId: string) => void
     expandIcon: string | ReactNode;
     checkedIcon: string | ReactNode;

@@ -33,13 +33,7 @@ export function MenuBar({
   const ref = useRef<HTMLUListElement>(null) as RefObject<HTMLUListElement>;
   
   const [callbacks] = useState<Record<string, Callback>>({});
-  const { value: active, setTrue: setActive, setFalse: unsetActive } = useBoolean(false);
-  const toggleActive = () => {
-    if (!active) return setActive();
-    const element = document.activeElement as HTMLElement;
-    element?.blur();
-    unsetActive();
-  }
+  const { value: active, toggle: toggleActive, setFalse: unsetActive } = useBoolean(false);
   
   const hotKeyHandler = useCallback((keyboardEvent: KeyboardEvent): void => {
     if (!enableHotKeys || (typeof disableMenubar === "boolean" && disableMenubar) || (typeof disableMenubar === "function" && disableMenubar() === true)) {
@@ -92,12 +86,12 @@ export function MenuBar({
   
   useEventListener('keydown', hotKeyHandler);
   useEventListener('keydown', handleKeyNavigation, ref);
-  useEventListener('click', toggleActive, ref);
   useEventListener('blur', unsetActive);
   useOnClickOutside(ref, unsetActive);
   
   const context: IMenubarContext = useMemo(() => ({
     active,
+    toggleActive,
     onSelect,
     expandIcon,
     checkedIcon,

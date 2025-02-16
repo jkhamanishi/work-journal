@@ -14,16 +14,16 @@ function MenuBar() {
           <Menu label="Open..." hotKeys={Keys.ctrl("O")} onSelect={menu.open} />
           <Menu label="Save" hotKeys={Keys.ctrl("S")} onSelect={menu.save} />
           <Menu label="Save As..." hotKeys={Keys.ctrlShift("S")} onSelect={menu.saveAs} />
-          <Menu label="AutoSave" checked={menu.autoSave} onSelect={menu.toggleAutoSave} closeOnSelect={false} />
+          <Menu label="AutoSave" checked={menu.autoSave} onSelect={menu.toggleAutoSave} keepOpenOnSelect />
         </Menu>
         <Menu label="Edit">
           <Menu label="Settings..." onSelect={menu.toggleShowSettings} />
         </Menu>
         <Menu label="View">
           <Menu label="Font Size">
-            <Menu label="Increase Font Size" />
-            <Menu label="Decrease Font Size" />
-            <Menu label="Restore Default Font Size" />
+            <Menu label="Increase Font Size" onSelect={menu.font.increase} keepOpenOnSelect />
+            <Menu label="Decrease Font Size" onSelect={menu.font.decrease} keepOpenOnSelect />
+            <Menu label="Restore Default Font Size" onSelect={menu.font.reset} keepOpenOnSelect />
           </Menu>
           <Menu label="Branch Width">
             <Menu label="Increase Branch Width" />
