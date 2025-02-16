@@ -1,5 +1,8 @@
+import "./Settings.scss";
+
 import { ChangeEvent, useEffect, useState } from "react";
-import { useJournalContext } from "../hooks/useJournalContext";
+import { useJournalContext } from "../../hooks/useJournalContext";
+import { useAppContext } from "../../hooks/useAppContext";
 
 
 function getFromLocalStorage(key: string, callback: (s: string) => void) {
@@ -26,8 +29,7 @@ function ThemeOption({textColor, bgColor, setTheme, name}: {textColor: string, b
 }
 
 function Settings() {
-  const [show, setShow] = useState(false);
-  const toggleShow = () => setShow(show => !show);
+  const { showSettings: show, hideSettings } = useAppContext();
   
   const [textColor, setTextColor] = useState("#11c700");
   const changeTextColor = (color: string) => {
@@ -64,9 +66,9 @@ function Settings() {
   
   return (
     <>
-      <button onClick={toggleShow}>Settings</button>
       {show && (
         <div id="settings">
+          <button className="close-btn" onClick={hideSettings}>✖</button>
           <div className="section-title">Settings</div>
           <div id="preset-themes">
             <div style={{marginBottom: "0.5rem"}}>Preset themes: </div>

@@ -17,7 +17,7 @@ function MenuBar() {
           <Menu label="AutoSave" checked={menu.autoSave} onSelect={menu.toggleAutoSave} closeOnSelect={false} />
         </Menu>
         <Menu label="Edit">
-          <Menu label="Settings..." />
+          <Menu label="Settings..." onSelect={menu.toggleShowSettings} />
         </Menu>
         <Menu label="View">
           <Menu label="Font Size">
