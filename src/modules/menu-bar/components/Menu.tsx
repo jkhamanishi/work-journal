@@ -145,6 +145,7 @@ export function Menu({
       
       if (keepOpenOnSelect === false && document.activeElement) {
         (document.activeElement as HTMLElement).blur();
+        toggleActive();
       }
       if (onSelect) {
         onSelect(e);
