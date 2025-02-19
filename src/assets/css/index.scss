@@ -39,7 +39,7 @@ html, body, #root {
   --branch-width: 0.1rem;
   list-style-type: none;
   position: relative;
-  margin-bottom: calc(100vh - 1.2 * 10em);
+  margin-bottom: calc(100% - 1.22 * 8em);
 }
 
 .year-entry > ul {
@@ -122,5 +122,5 @@ html, body, #root {
   font-size: inherit;
   background: inherit;
   color: inherit;
-  padding: none;
+  padding: 0;
 }
