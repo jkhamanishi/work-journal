@@ -27,7 +27,8 @@ html, body, #root {
 #container {
   --font-size: 1rem;
   font-size: var(--font-size);
-  padding: 0 1rem;
+  line-height: 1.22;
+  margin: 1rem 0 0 1rem;
   overflow: auto;
   white-space: nowrap;
   flex-shrink: 1;
@@ -105,13 +106,13 @@ html, body, #root {
   display: block;
   background: var(--bg-color);
 }
-.year-entry > span        { top: 0rem; z-index: 4; padding-top: 1rem;}
+.year-entry > span        { z-index: 4; top: calc(1.2 * 0em); }
 .month-entry > div > span,
-.month-entry > .h-branch  { top: 2rem; z-index: 3; }
+.month-entry > .h-branch  { z-index: 3; top: calc(1.2 * 1em); }
 .week-entry > div > span,
-.week-entry > .h-branch   { top: 3rem; z-index: 2; }
+.week-entry > .h-branch   { z-index: 2; top: calc(1.2 * 2em); }
 .day-entry > div > span,
-.day-entry > .h-branch    { top: 4rem; z-index: 1; }
+.day-entry > .h-branch    { z-index: 1; top: calc(1.2 * 3em); }
 
 
 .project-entry input {
