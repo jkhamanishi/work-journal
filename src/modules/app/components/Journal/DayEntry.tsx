@@ -15,6 +15,7 @@ function DayEntry({day}: {day: DayInfo}) {
             <ProjectEntry project={{project, ...day}} key={project || data.listOfProjects.length}/>
           ))}
         </ul>
+        <div className="spacer" />
       </div>
     </li>
   );
