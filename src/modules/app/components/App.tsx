@@ -2,8 +2,8 @@ import "../../../assets/css/index.scss";
 
 import { AppContextProvider } from "../hooks/useAppContext";
 import { JournalContextProvider } from "../hooks/useJournalContext";
-import JournalContainer from "./JournalContainer";
 import MenuBar from "./MenuBar";
+import Journal from "./Journal";
 import Settings from "./Settings";
 
 
@@ -12,7 +12,7 @@ function App() {
     <AppContextProvider>
       <JournalContextProvider>
         <MenuBar />
-        <JournalContainer />
+        <Journal />
         <Settings />
       </JournalContextProvider>
     </AppContextProvider>

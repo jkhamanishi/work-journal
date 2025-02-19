@@ -16,11 +16,13 @@ function Journal() {
   }, [dict]);
   
   return (
-    <ul id="journal">
-      {Object.keys(dict).map((year) => (
-        <YearEntry year={year} key={year} />
-      ))}
-    </ul>
+    <div id="container">
+      <ul id="journal">
+        {Object.keys(dict).map((year) => (
+          <YearEntry year={year} key={year} />
+        ))}
+      </ul>
+    </div>
   );
 }
 
