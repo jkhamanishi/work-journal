@@ -8,9 +8,9 @@ function Journal() {
   const firstLoad = useRef(0);
   
   useEffect(() => {
-    if (firstLoad.current <= 1) {
-      const root = document.getElementById("root")!;
-      root.scrollTop = root.scrollHeight;
+    if (firstLoad.current <= 2) {
+      const container = document.getElementById("container")!;
+      container.scrollTop = container.scrollHeight;
     }
     firstLoad.current += 1;
   }, [dict]);

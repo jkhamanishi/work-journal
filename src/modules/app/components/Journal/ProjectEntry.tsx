@@ -34,7 +34,7 @@ function ProjectEntry({project}: {project: ProjectInfo}) {
     save();
   }
   const deleteEntry = () => {
-    if (!project.project && !data.project.length) {
+    if (!project.project && !data.project?.length) {
       delete data.day[project.project];
       save();
     }
