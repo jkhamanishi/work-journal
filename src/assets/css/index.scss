@@ -32,6 +32,8 @@ html, body, #root {
   overflow: auto;
   white-space: nowrap;
   flex-shrink: 1;
+  scroll-snap-type: y proximity;
+  scroll-padding-top: calc(1.2 * 3em);
 }
 
 #journal {
@@ -39,6 +41,7 @@ html, body, #root {
   --branch-width: 0.1rem;
   list-style-type: none;
   position: relative;
+  margin-bottom: calc(100vh - 4em);
 }
 
 .year-entry > ul {
@@ -124,13 +127,6 @@ html, body, #root {
   padding: 0;
 }
 
-.year-entry:last-child .month-entry:last-child .week-entry:last-child .day-entry:last-child {
-  & ul {
-    position: sticky;
-    z-index: 1;
-    top: calc(1.2 * 4em);
-  }
-  & .spacer {
-    height: 100vh;
-  }
+.year-entry:last-child .month-entry:last-child .week-entry:last-child .day-entry {
+  scroll-snap-align: start;
 }
