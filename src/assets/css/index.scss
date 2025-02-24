@@ -41,7 +41,6 @@ html, body, #root {
   --branch-width: 0.1rem;
   list-style-type: none;
   position: relative;
-  margin-bottom: calc(100vh - 4em);
 }
 
 .year-entry > ul {
@@ -127,6 +126,16 @@ html, body, #root {
   padding: 0;
 }
 
-.year-entry:last-child .month-entry:last-child .week-entry:last-child .day-entry {
-  scroll-snap-align: start;
+.year-entry:last-child .month-entry:last-child .week-entry:last-child > div > ul {
+  & > .day-entry { scroll-snap-align: start }
+  & > .day-entry:last-child {
+    position: sticky;
+    top: calc(1.2 * 3em);
+  }
+  
+  &::after {
+    content: '';
+    display: block;
+    height: calc(100vh - 1.2 * 5em);
+  }
 }
