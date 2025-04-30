@@ -126,13 +126,14 @@ html, body, #root {
   padding: 0;
 }
 
+.year-entry:last-child .month-entry:last-child .week-entry:nth-last-child(-n+2) .day-entry {
+  scroll-snap-align: start;
+}
 .year-entry:last-child .month-entry:last-child .week-entry:last-child > div > ul {
-  & > .day-entry { scroll-snap-align: start }
   & > .day-entry:last-child {
     position: sticky;
     top: calc(1.2 * 3em);
   }
-  
   &::after {
     content: '';
     display: block;
