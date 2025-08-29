@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext } from "react";
-import renderContextProvider from "../../../lib/react/renderContextProvider";
+import renderContextProvider from "../../lib/react/renderContextProvider";
 import { useBoolean } from "usehooks-ts";
 
 interface AppContextType {

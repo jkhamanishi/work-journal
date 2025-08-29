@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-import { useJournalContext } from "../hooks/useJournalContext";
-import { JournalDict } from "../hooks/useJournalDict";
+import { useJournalContext } from "./useJournalContext";
+import { JournalDict } from "./useJournalDict";
 
 import * as yaml from "js-yaml";
 import * as IDB from "idb-keyval";
