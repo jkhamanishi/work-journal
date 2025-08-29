@@ -1,5 +1,21 @@
+$menu-background: var(--bg-color);
+$menu-background-focus: var(--text-color);
+$menu-text-focus: var(--bg-color);
+$menu-background-hover: var(--text-color);
+$menu-text-hover: var(--bg-color);
+$separator-border: var(--text-color);
+$menu-border: var(--bg-color);
+
 #menubar {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.85rem;
   align-self: flex-start;
+  --win32menubar-hover-background: var(--text-color);
+  --win32menubar-hover-color:      var(--bg-color);
+  --win32menubar-root-hover-background: var(--text-color);
+  --win32menubar-root-hover-color:      var(--bg-color);
+  --win32menubar-menu-background:  var(--bg-color);
+  --win32menubar-separator-color:  var(--text-color);
+  --win32menubar-menu-border:      none;
+  --win32menubar-menu-box-shadow:  2px 2px 6px #0008;
 }

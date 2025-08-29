@@ -1,4 +1,4 @@
-import "../../../assets/css/index.scss";
+import "../../assets/css/index.scss";
 
 import { AppContextProvider } from "../hooks/useAppContext";
 import { JournalContextProvider } from "../hooks/useJournalContext";

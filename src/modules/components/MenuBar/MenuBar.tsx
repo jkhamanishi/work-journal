@@ -1,6 +1,6 @@
 import "./MenuBar.scss";
 
-import { MenuBar as _MenuBar, Menu, Keys } from "../../../menu-bar";
+import { Win32MenuBar, MenuItem, RootMenu, SubMenu, Keys } from 'react-win32-menu';
 import useAppMenu from "../../hooks/useAppMenu";
 
 
@@ -9,82 +9,35 @@ function MenuBar() {
   
   return (  
     <nav id="menubar">
-      <_MenuBar>
-        <Menu label="File">
-          <Menu label="Open..." hotKeys={Keys.ctrl("O")} onSelect={menu.open} />
-          <Menu label="Save" hotKeys={Keys.ctrl("S")} onSelect={menu.save} />
-          <Menu label="Save As..." hotKeys={Keys.ctrlShift("S")} onSelect={menu.saveAs} />
-          <Menu label="AutoSave" checked={menu.autoSave} onSelect={menu.toggleAutoSave} keepOpenOnSelect />
-        </Menu>
-        <Menu label="Edit">
-          <Menu label="Settings..." onSelect={menu.toggleShowSettings} />
-        </Menu>
-        <Menu label="View">
-          <Menu label="Font Size">
-            <Menu label="Increase Font Size" onSelect={menu.font.increase} keepOpenOnSelect />
-            <Menu label="Decrease Font Size" onSelect={menu.font.decrease} keepOpenOnSelect />
-            <Menu label="Restore Default Font Size" onSelect={menu.font.reset} keepOpenOnSelect />
-          </Menu>
-          <Menu label="Branch Width">
-            <Menu label="Increase Branch Width" onSelect={menu.branchWidth.increase} keepOpenOnSelect />
-            <Menu label="Decrease Branch Width" onSelect={menu.branchWidth.decrease} keepOpenOnSelect />
-            <Menu label="Restore Default Branch Width" onSelect={menu.branchWidth.reset} keepOpenOnSelect />
-          </Menu>
-        </Menu>
-        <Menu label="Help">
-          <Menu label="Version..." onSelect={menu.showAppVersion} />
-        </Menu>
-      </_MenuBar>
+      <Win32MenuBar>
+        <RootMenu label="File">
+          <MenuItem label="Open..." hotKey={Keys.Ctrl("O")} onSelect={menu.open} />
+          <MenuItem label="Save" hotKey={Keys.Ctrl("S")} onSelect={menu.save} />
+          <MenuItem label="Save As..." hotKey={Keys.CtrlShift("S")} onSelect={menu.saveAs} />
+          <MenuItem label="AutoSave" checked={menu.autoSave} onSelect={menu.toggleAutoSave} keepOpenOnSelect />
+        </RootMenu>
+        <RootMenu label="Edit">
+          <MenuItem label="Settings..." onSelect={menu.toggleShowSettings} />
+        </RootMenu>
+        <RootMenu label="View">
+          <SubMenu label="Font Size">
+            <MenuItem label="Increase Font Size" onSelect={menu.font.increase} keepOpenOnSelect />
+            <MenuItem label="Decrease Font Size" onSelect={menu.font.decrease} keepOpenOnSelect />
+            <MenuItem label="Restore Default Font Size" onSelect={menu.font.reset} keepOpenOnSelect />
+          </SubMenu>
+          <SubMenu label="Branch Width">
+            <MenuItem label="Increase Branch Width" onSelect={menu.branchWidth.increase} keepOpenOnSelect />
+            <MenuItem label="Decrease Branch Width" onSelect={menu.branchWidth.decrease} keepOpenOnSelect />
+            <MenuItem label="Restore Default Branch Width" onSelect={menu.branchWidth.reset} keepOpenOnSelect />
+          </SubMenu>
+        </RootMenu>
+        <RootMenu label="Help">
+          <MenuItem label="Version..." onSelect={menu.showAppVersion} />
+        </RootMenu>
+      </Win32MenuBar>
     </nav>
   );
 }
 
 
 export default MenuBar;
-
-
-
-
-
-
-
-
-
-// function MenuBar() {
-  
-  
-//   return (
-//     <nav id="menubar">
-//       <ul>
-//         <li>
-//           <a href="#">File</a>
-//           <ul>
-//             <li><a href="#">Open</a></li>
-//             <li><a href="#">Save</a></li>
-//             <li><a href="#">Save as&#8230;</a></li>
-//             <li><a href="#">Close</a></li>
-//             <li className="separator"></li>
-//             <li><a href="#">Exit</a></li>
-//           </ul>
-//         </li>
-//         <li>
-//           <a href="#">Edit</a>
-//           <ul>
-//             <li><a href="#">Cut</a></li>
-//             <li><a href="#">Copy</a></li>
-//             <li><a href="#">Paste</a></li>
-//           </ul>
-//         </li>
-//         <li>
-//           <a href="#">Help</a>
-//           <ul>
-//             <li><a href="#">About</a></li>
-//           </ul>
-//         </li>
-//       </ul>
-//     </nav>
-//   );
-// }
-
-
-// export default MenuBar;
